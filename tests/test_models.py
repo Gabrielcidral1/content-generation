@@ -63,6 +63,21 @@ class TestMarketingContent:
         assert restored.hero_headline == sample_marketing_content.hero_headline
 
 
+class TestAmenities:
+    def test_known_code_returns_label(self):
+        from content_generation.amenities import human_amenity
+        assert human_amenity("PrivatePool") == "Private Pool"
+        assert human_amenity("InternetBroadband") == "High-Speed Wi-Fi"
+
+    def test_unknown_code_title_cases_fallback(self):
+        from content_generation.amenities import human_amenity
+        assert human_amenity("RooftopTerrace") == "Rooftop Terrace"
+
+    def test_unknown_code_with_and_expands(self):
+        from content_generation.amenities import human_amenity
+        assert human_amenity("BedAndBreakfast") == "Bed & Breakfast"
+
+
 class TestGoldenDataset:
     def test_all_golden_samples_valid(self):
         for gs in GOLDEN_DATASET:

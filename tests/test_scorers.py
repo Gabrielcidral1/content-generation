@@ -175,6 +175,88 @@ class TestGroundednessScorer:
         assert result.answer == "FAIL"
 
 
+class TestMarketingQualityScorer:
+    def _make_state(self, generated):
+        state = MagicMock()
+        state.metadata = {
+            "property": json.loads(PROPERTY.model_dump_json()),
+            "generated": generated,
+        }
+        return state
+
+    @pytest.mark.asyncio
+    async def test_high_scores_pass(self):
+        from evals.scorers import marketing_quality_scorer
+
+        judge_response = json.dumps({
+            "appeal": 5, "specificity": 5, "coherence": 5,
+            "reasoning": "Excellent copy.",
+        })
+
+        with patch("evals.scorers.get_model") as mock_get_model:
+            mock_model = MagicMock()
+            mock_model.generate = AsyncMock(return_value=MagicMock(completion=judge_response))
+            mock_get_model.return_value = mock_model
+
+            result = await marketing_quality_scorer()(self._make_state(GOOD_GENERATED), None)
+
+        assert result.answer == "PASS"
+        assert result.value == pytest.approx(1.0)
+
+    @pytest.mark.asyncio
+    async def test_low_scores_fail(self):
+        from evals.scorers import marketing_quality_scorer
+
+        judge_response = json.dumps({
+            "appeal": 1, "specificity": 1, "coherence": 1,
+            "reasoning": "Very generic.",
+        })
+
+        with patch("evals.scorers.get_model") as mock_get_model:
+            mock_model = MagicMock()
+            mock_model.generate = AsyncMock(return_value=MagicMock(completion=judge_response))
+            mock_get_model.return_value = mock_model
+
+            result = await marketing_quality_scorer()(self._make_state(GOOD_GENERATED), None)
+
+        assert result.answer == "FAIL"
+        assert result.value == pytest.approx(0.0)
+
+    @pytest.mark.asyncio
+    async def test_metadata_contains_dimension_scores(self):
+        from evals.scorers import marketing_quality_scorer
+
+        judge_response = json.dumps({
+            "appeal": 4, "specificity": 3, "coherence": 5,
+            "reasoning": "Good overall.",
+        })
+
+        with patch("evals.scorers.get_model") as mock_get_model:
+            mock_model = MagicMock()
+            mock_model.generate = AsyncMock(return_value=MagicMock(completion=judge_response))
+            mock_get_model.return_value = mock_model
+
+            result = await marketing_quality_scorer()(self._make_state(GOOD_GENERATED), None)
+
+        assert result.metadata["appeal"] == 4.0
+        assert result.metadata["specificity"] == 3.0
+        assert result.metadata["coherence"] == 5.0
+
+    @pytest.mark.asyncio
+    async def test_malformed_response_fails_gracefully(self):
+        from evals.scorers import marketing_quality_scorer
+
+        with patch("evals.scorers.get_model") as mock_get_model:
+            mock_model = MagicMock()
+            mock_model.generate = AsyncMock(return_value=MagicMock(completion="not json at all"))
+            mock_get_model.return_value = mock_model
+
+            result = await marketing_quality_scorer()(self._make_state(GOOD_GENERATED), None)
+
+        assert result.answer == "FAIL"
+        assert result.value == pytest.approx(0.0)
+
+
 class TestGoldenConstraintsScorer:
     def _make_golden_state(self, generated, must_mention, must_not_mention, category="standard"):
         state = MagicMock()

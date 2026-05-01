@@ -5,12 +5,14 @@ from inspect_ai.model import get_model
 from inspect_ai.scorer import Score, mean, scorer
 
 from content_generation.models import PropertyData
-
-_HTML_RE = re.compile(r"<[^>]+>")
-
-
-def _has_html(text: str) -> bool:
-    return bool(_HTML_RE.search(text))
+from content_generation.utils import (
+    ABOUT_MAX_WORDS,
+    ABOUT_MIN_WORDS,
+    HEADLINE_MAX_LEN,
+    HEADLINE_MIN_LEN,
+    HIGHLIGHT_MAX_LEN,
+    has_html,
+)
 
 
 def _all_generated_text(generated: dict) -> str:
@@ -35,24 +37,24 @@ def structural_completeness_scorer():
         details = []
 
         headline = generated.get("hero_headline", "")
-        ok = bool(headline) and 10 <= len(headline) <= 120 and not _has_html(headline)
+        ok = bool(headline) and HEADLINE_MIN_LEN <= len(headline) <= HEADLINE_MAX_LEN and not has_html(headline)
         checks.append(ok)
-        details.append(f"hero_headline length {len(headline)} {'OK' if ok else 'FAIL'}{' (has HTML)' if _has_html(headline) else ''}")
+        details.append(f"hero_headline length {len(headline)} {'OK' if ok else 'FAIL'}{' (has HTML)' if has_html(headline) else ''}")
 
         highlights = generated.get("property_highlights", [])
         h_ok = (
             isinstance(highlights, list)
             and 3 <= len(highlights) <= 5
-            and all(isinstance(h, str) and len(h) <= 120 and not _has_html(h) for h in highlights)
+            and all(isinstance(h, str) and len(h) <= HIGHLIGHT_MAX_LEN and not has_html(h) for h in highlights)
         )
         checks.append(h_ok)
         details.append(f"property_highlights count={len(highlights)} {'OK' if h_ok else 'FAIL'}")
 
         about = generated.get("about_section", "")
         word_count = len(about.split())
-        a_ok = bool(about) and 80 <= word_count <= 600 and not _has_html(about)
+        a_ok = bool(about) and ABOUT_MIN_WORDS <= word_count <= ABOUT_MAX_WORDS and not has_html(about)
         checks.append(a_ok)
-        details.append(f"about_section words={word_count} {'OK' if a_ok else 'FAIL'}{' (has HTML)' if _has_html(about) else ''}")
+        details.append(f"about_section words={word_count} {'OK' if a_ok else 'FAIL'}{' (has HTML)' if has_html(about) else ''}")
 
         amenities = generated.get("amenities_descriptions", {})
         am_ok = isinstance(amenities, dict) and len(amenities) >= 3

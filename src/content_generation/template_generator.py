@@ -1,14 +1,10 @@
-import re
-
 from content_generation.amenities import human_amenity
 from content_generation.generator import ContentGeneratorBase
 from content_generation.models import MarketingContent, PropertyData
 
-_HTML_RE = re.compile(r"<[^>]+>")
 
-
-def _strip_html(text: str) -> str:
-    return _HTML_RE.sub(" ", text).strip()
+def _plural(n: int, word: str) -> str:
+    return f"{word}s" if n != 1 else word
 
 
 class TemplateContentGenerator(ContentGeneratorBase):
@@ -30,9 +26,16 @@ class TemplateContentGenerator(ContentGeneratorBase):
 
         # --- highlights (exactly 3) ---
         if info.bedrooms == 0:
-            cap = f"Studio sleeping up to {info.max_guests} guest{'s' if info.max_guests != 1 else ''} · {info.bathrooms} bathroom{'s' if info.bathrooms != 1 else ''}"
+            cap = (
+                f"Studio sleeping up to {info.max_guests} {_plural(info.max_guests, 'guest')}"
+                f" · {info.bathrooms} {_plural(info.bathrooms, 'bathroom')}"
+            )
         else:
-            cap = f"Sleeps {info.max_guests} · {info.bedrooms} bedroom{'s' if info.bedrooms != 1 else ''} · {info.bathrooms} bathroom{'s' if info.bathrooms != 1 else ''}"
+            cap = (
+                f"Sleeps {info.max_guests}"
+                f" · {info.bedrooms} {_plural(info.bedrooms, 'bedroom')}"
+                f" · {info.bathrooms} {_plural(info.bathrooms, 'bathroom')}"
+            )
 
         top_amenities = [human_amenity(a) for a in property_data.amenities[:3]]
         amenity_highlight = (
@@ -61,7 +64,7 @@ class TemplateContentGenerator(ContentGeneratorBase):
 
         bed_phrase = (
             "a studio" if info.bedrooms == 0
-            else f"{info.bedrooms} bedroom{'s' if info.bedrooms != 1 else ''}"
+            else f"{info.bedrooms} {_plural(info.bedrooms, 'bedroom')}"
         )
 
         amenity_list = (
@@ -72,8 +75,8 @@ class TemplateContentGenerator(ContentGeneratorBase):
 
         about = (
             f"{name} is a {ptype.lower()} in {loc.city}, {loc.country}. "
-            f"The property offers {bed_phrase} and {info.bathrooms} bathroom{'s' if info.bathrooms != 1 else ''}, "
-            f"sleeping up to {info.max_guests} guest{'s' if info.max_guests != 1 else ''}."
+            f"The property offers {bed_phrase} and {info.bathrooms} {_plural(info.bathrooms, 'bathroom')}, "
+            f"sleeping up to {info.max_guests} {_plural(info.max_guests, 'guest')}."
             f"{review_str}"
             f"{checkin_str} "
             f"The property is equipped with {amenity_list}. "

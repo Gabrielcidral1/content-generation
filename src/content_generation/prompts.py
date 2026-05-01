@@ -2,6 +2,7 @@ import json
 
 from .amenities import human_amenity
 from .models import PropertyData
+from .utils import ABOUT_MAX_WORDS, ABOUT_MIN_WORDS, HEADLINE_MAX_LEN, HEADLINE_MIN_LEN, HIGHLIGHT_MAX_LEN
 
 SYSTEM_PROMPT = """\
 You are a professional marketing copywriter for vacation rental properties.
@@ -16,19 +17,19 @@ CRITICAL RULES:
 6. Do NOT use em dashes (—) or en dashes in any copy. Use commas, colons, or short sentences instead.
 """
 
-OUTPUT_SCHEMA = """\
-{
-  "hero_headline": "<compelling 1-line headline, 10-120 characters>",
+OUTPUT_SCHEMA = f"""\
+{{
+  "hero_headline": "<compelling 1-line headline, {HEADLINE_MIN_LEN}-{HEADLINE_MAX_LEN} characters>",
   "property_highlights": [
-    "<highlight 1, under 120 chars>",
-    "<highlight 2, under 120 chars>",
-    "<highlight 3, under 120 chars>"
+    "<highlight 1, under {HIGHLIGHT_MAX_LEN} chars>",
+    "<highlight 2, under {HIGHLIGHT_MAX_LEN} chars>",
+    "<highlight 3, under {HIGHLIGHT_MAX_LEN} chars>"
   ],
-  "about_section": "<2-4 paragraphs describing the property, 80-600 words>",
-  "amenities_descriptions": {
+  "about_section": "<2-4 paragraphs describing the property, {ABOUT_MIN_WORDS}-{ABOUT_MAX_WORDS} words>",
+  "amenities_descriptions": {{
     "<amenity_code>": "<1-2 sentence description of this amenity>"
-  }
-}
+  }}
+}}
 
 Rules:
 - property_highlights: 3 to 5 items

@@ -1,3 +1,5 @@
+import re
+
 AMENITY_LABELS: dict[str, str] = {
     "AirConditioning": "Air Conditioning",
     "BathroomAndLaundry": "Bathroom & Laundry",
@@ -42,4 +44,8 @@ AMENITY_LABELS: dict[str, str] = {
 
 
 def human_amenity(code: str) -> str:
-    return AMENITY_LABELS.get(code, code.replace("And", " & ").replace("_", " ").title())
+    label = AMENITY_LABELS.get(code)
+    if label:
+        return label
+    words = re.sub(r"([a-z])([A-Z])", r"\1 \2", code).replace("_", " ")
+    return words.replace(" And ", " & ").title()
