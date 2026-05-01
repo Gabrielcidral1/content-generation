@@ -7,63 +7,51 @@ The primary deliverable is the evaluation suite — the code that measures wheth
 
 ## System Flow
 
+### Evaluation pipeline (requires `ANTHROPIC_API_KEY`)
+
+```mermaid
+flowchart TD
+    subgraph data["Data Sources"]
+        F["data/fixtures/\n6 JSON property files"]
+        G["golden.py\n5 samples\nstandard · edge case · adversarial"]
+    end
+
+    subgraph gen["Generators"]
+        LLM["AnthropicContentGenerator\nmodel: claude-haiku-4-5"]
+        TPL["TemplateContentGenerator\nno API · deterministic baseline"]
+    end
+
+    F & G --> LLM
+    F & G --> TPL
+
+    LLM -->|MarketingContent| FE["fixture_eval"]
+    LLM -->|MarketingContent| GE["golden_eval"]
+    TPL -->|MarketingContent| FT["fixture_eval_template"]
+    TPL -->|MarketingContent| GT["golden_eval_template"]
+
+    subgraph scorers["Scorers"]
+        S1["structural_completeness\nrule-based"]
+        S2["factual_accuracy\nrule-based"]
+        S3["groundedness\nLLM judge"]
+        S4["marketing_quality\nLLM judge"]
+        S5["golden_constraints\nhybrid — golden tasks only"]
+    end
+
+    FE & FT & GE & GT --> S1 & S2 & S3 & S4
+    GE & GT --> S5
+
+    S1 & S2 & S3 & S4 & S5 --> LOGS["logs/*.eval\ncommitted to repo"]
 ```
-══════════════════════════════════════════════════════════════
- ONE-TIME SETUP  (requires ANTHROPIC_API_KEY)
-══════════════════════════════════════════════════════════════
 
-  fixtures.py                    golden.py
-  6 mock properties              5 samples:
-  (villa, apartment, cottage,    standard / edge case / adversarial
-   bungalow, chalet,
-   HTML-description townhouse)
-           │                            │
-           └──────────────┬─────────────┘
-                          │ PropertyData
-                          ▼
-               ┌──────────────────────┐
-               │   Content Generator  │  ← AnthropicContentGenerator
-               │   (generator.py)     │    model: claude-haiku-4-5
-               └──────────┬───────────┘
-                          │ MarketingContent
-                          ▼
-         ┌────────────────────────────────────────┐
-         │           Inspect AI Eval              │
-         │                                        │
-         │  fixture_eval  (6 samples)             │
-         │  golden_eval   (5 samples)             │
-         │                                        │
-         │  Scorers applied to each sample:       │
-         │  ┌─ structural_completeness  (rules)   │
-         │  ├─ factual_accuracy         (rules)   │
-         │  ├─ groundedness             (LLM judge)│
-         │  ├─ marketing_quality        (LLM judge)│
-         │  └─ golden_constraints       (hybrid)  │
-         │       └─ must_mention / must_not_mention│
-         └──────────────┬─────────────────────────┘
-                        │
-                        ▼
-                  logs/*.eval
-              (committed to repo)
+### Review dashboard (no API key needed)
 
-══════════════════════════════════════════════════════════════
- REVIEW  (no API key — just uv sync && marimo run dashboard.py)
-══════════════════════════════════════════════════════════════
-
-                  logs/*.eval
-                       │
-                       ▼
-          ┌────────────────────────┐
-          │   Marimo Dashboard     │
-          │   (dashboard.py)       │
-          └────────────┬───────────┘
-                       │
-          ┌────────────┼─────────────┐
-          ▼            ▼             ▼
-    Generated      Scores        Golden
-    content        heatmap       dataset
-    per property   (all scorers) + adversarial
-                                  detection
+```mermaid
+flowchart LR
+    LOGS["logs/*.eval"] --> D["evals.py\nMarimo dashboard"]
+    D --> V1["Generated content\nper property · LLM vs template tabs"]
+    D --> V2["Composite score\nLLM vs template lift"]
+    D --> V3["Golden evaluation\nmust-mention · must-not-mention"]
+    D --> V4["Reproducibility\nscore variance across runs"]
 ```
 
 ---
@@ -72,16 +60,16 @@ The primary deliverable is the evaluation suite — the code that measures wheth
 
 ### Evaluation-first design
 
-The evaluation suite is the core of this project. Content generation is only as good as our ability to measure it. There are three levels at which evaluation matters:
+The evaluation suite is the core of this project. There are three levels at which evaluation matters:
 
-**1. Online quality gates** *(implemented as rule-based scorers)*
-Before content is served, fast rule-based checks verify structural completeness and factual accuracy. These are cheap (no API calls) and can be run inline, triggering a fallback to templated content if they fail.
+**1. Online quality gates** *(not implemented here)*
+Before content is served, fast rule-based checks would verify structural completeness and factual accuracy inline, triggering a fallback to templated content if they fail. This requires production instrumentation — out of scope for this assignment.
 
 **2. Offline content quality** *(implemented as Inspect AI tasks)*
-After generation, LLM-judge scorers evaluate whether content is grounded (no hallucinations), specific (not generic filler), and well-written. The golden dataset adds reference-based assertions (`must_mention` / `must_not_mention`) including adversarial cases that test prompt injection resistance.
+This is what the project delivers. After generation, a set of scorers evaluate the output in batch. They mix two axes of variation:
 
-**3. Business outcome metrics** *(documented, not instrumented here)*
-The metrics we ultimately care about are downstream: booking conversion rate on pages with generated vs. templated copy, time-to-publish (how much manual editing is needed), and manual adjustment rate per property. These require production instrumentation and A/B experiment infrastructure — a natural next step once this pipeline is deployed.
+- **Reference-free vs reference-based**: most scorers (`structural_completeness`, `factual_accuracy`, `groundedness`, `marketing_quality`) evaluate the output against the input data alone. The `golden_constraints` scorer is reference-based — it checks output against a curated set of `must_mention` / `must_not_mention` phrases, including adversarial injection cases.
+- **Rule-based vs LLM judge**: `structural_completeness` and `factual_accuracy` use deterministic rules (no API calls). `groundedness` and `marketing_quality` use an LLM judge. `golden_constraints` is hybrid — rules first, LLM only when rules pass.
 
 ### Evaluation scorers
 
@@ -93,20 +81,21 @@ The metrics we ultimately care about are downstream: booking conversion rate on 
 | `marketing_quality` | LLM judge | Appeal (headline), specificity (highlights), coherence (about section) — rated 1–5 |
 | `golden_constraints` | Hybrid | `must_mention` phrases present + `must_not_mention` phrases absent; soft tone check if rule part passes |
 
+### Template baseline
+
+A deterministic `TemplateContentGenerator` produces rule-based copy from property fields with no API calls. Running `fixture_eval_template` and `golden_eval_template` against the same scorer suite establishes a baseline composite score. The Composite Score card in the dashboard shows the lift (LLM minus template) per property, making it easy to identify where the LLM adds value and where it does not.
+
 ### Golden dataset
 
 Five samples designed to stress-test the pipeline:
 
 | Category | What it tests |
 |----------|--------------|
-| Standard (×2) | Baseline quality — location, capacity, context-appropriate vocabulary |
+| Standard (x2) | Baseline quality — location, capacity, context-appropriate vocabulary |
 | Edge case: no reviews | No fabricated social proof ("highly rated", "guests love") |
 | Edge case: studio, 1 guest | No hallucinated bedrooms; respects extreme capacity constraints |
 | Adversarial: prompt injection | Injection in description field must not appear in generated output |
 
-### HTML handling
-
-Fixture #6 (Lisbon townhouse) has a description field full of `<p>`, `<strong>`, `<br>` HTML tags. The structural completeness scorer explicitly checks that no HTML tags leak into generated marketing copy.
 
 ---
 
@@ -123,7 +112,7 @@ uv sync
 Evaluation logs are committed to this repository. Just run:
 
 ```bash
-uv run marimo run dashboard.py
+uv run marimo run evals.py
 ```
 
 Then open the URL shown in your terminal. Use the tabs and dropdown to explore generated content and scores per property.
@@ -155,7 +144,7 @@ Logs are stored in `logs/` as `.eval` files (binary, compressed).
 
 **Via the Marimo dashboard** (recommended):
 ```bash
-uv run marimo run dashboard.py
+uv run marimo run evals.py
 ```
 
 **Via Inspect AI's built-in viewer**:
@@ -185,23 +174,26 @@ content_generation/
 ├── README.md
 ├── src/
 │   └── content_generation/
-│       ├── models.py         # PropertyData, MarketingContent, GoldenSample
-│       ├── amenities.py      # Amenity code → human-readable label
-│       ├── prompts.py        # Generation prompt builder
-│       ├── generator.py      # ContentGeneratorBase + AnthropicContentGenerator
-│       ├── fixtures.py       # 6 mock PropertyData instances
-│       └── golden.py         # 5 GoldenSample instances with must_mention constraints
+│       ├── models.py              # PropertyData, MarketingContent, GoldenSample
+│       ├── amenities.py           # Amenity code to human-readable label
+│       ├── prompts.py             # Generation prompt builder
+│       ├── generator.py           # ContentGeneratorBase + AnthropicContentGenerator
+│       ├── template_generator.py  # TemplateContentGenerator (deterministic baseline)
+│       ├── fixtures.py            # Loads PropertyData from data/fixtures/*.json
+│       ├── golden.py              # 5 GoldenSample instances with must_mention constraints
+│       └── data/
+│           └── fixtures/          # 6 JSON property files (1001-1006)
 ├── evals/
-│   ├── solvers.py            # content_generation_solver
-│   ├── scorers.py            # 5 Inspect AI scorers
-│   └── tasks.py              # fixture_eval + golden_eval tasks
+│   ├── solvers.py                 # content_generation_solver
+│   ├── scorers.py                 # 5 Inspect AI scorers
+│   └── tasks.py                   # 4 tasks (fixture + golden x LLM + template)
 ├── tests/
-│   ├── conftest.py           # shared fixtures and mocks
+│   ├── conftest.py                # shared fixtures and mocks
 │   ├── test_models.py
 │   ├── test_generator.py
 │   └── test_scorers.py
-├── logs/                     # committed .eval log files
-└── dashboard.py              # Marimo results dashboard
+├── logs/                          # committed .eval log files
+└── evals.py                       # Marimo results dashboard
 ```
 
 ---
@@ -218,8 +210,10 @@ content_generation/
 
 ## What I'd Do Next
 
-- **A/B experiment infrastructure**: use `inspect_ai.eval_set` to compare prompt variants (e.g., Haiku vs Sonnet, different prompt strategies) with a shared scorer suite, producing a ranked leaderboard.
-- **Business metric proxies**: add a "publication readiness" scorer (LLM judge rating how much editing the content would need) as a proxy for time-to-publish.
-- **Semantic similarity scorer**: embed generated vs. golden content and score cosine similarity as an additional reference-based metric.
-- **Caching layer**: add Inspect AI prompt caching to reduce LLM judge API costs on large datasets.
-- **CI integration**: run `inspect eval` on every PR that touches prompts or the generator, with a score regression threshold that blocks merges.
+### From offline eval to real business impact
+
+Once the evaluation suite is mature enough that we trust the generator will not hallucinate or produce blunders, the natural next step is to think about the problem through a **causal inference lens**.
+
+The metrics we ultimately care about — booking conversion rate, time-to-publish, and number of manual edits made by the user after generation — are only observable **online**, in production. Offline scorers are proxies, not ground truth. To measure whether the generator actually improves these outcomes, we need **A/B experiments**: serve LLM-generated copy to a randomly selected subset of properties, templated copy to the rest, and compare booking rates and editorial effort over a statistically significant window.
+
+This is also where the **composite score weights** need revisiting. The current weights (Factual Accuracy 30%, Marketing Quality 25%, etc.) are a reasonable prior, but they are arbitrary until we have empirical data linking each scorer to the business outcomes above. Once A/B results are available, we can regress conversion lift against individual scorer values to learn which dimensions actually predict success and recalibrate accordingly.

@@ -1,0 +1,51 @@
+{
+  "property_id": 1007,
+  "property_name": "Riad Bab Doukkala",
+  "property_type": "Villa",
+  "description": {
+    "name": "Riad Bab Doukkala",
+    "headline": "Authentic 18th-century riad with plunge pool in the Marrakech medina",
+    "description": "Hidden behind an unassuming wooden door in the heart of Marrakech's medina, Riad Bab Doukkala opens into a world of carved plasterwork, hand-painted Zellige tilework, and fragrant orange-blossom courtyards. Four individually decorated suites surround a central courtyard with a heated plunge pool and a shaded breakfast terrace. A dedicated staff member is on hand throughout your stay."
+  },
+  "amenities": [
+    "PrivatePool",
+    "AirConditioning",
+    "InternetBroadband",
+    "LinensProvided",
+    "EssentialCookware",
+    "OutdoorFurniture",
+    "HairDryer",
+    "Heating"
+  ],
+  "image_urls": [
+    "https://example.com/riad-bab-doukkala/01.jpg",
+    "https://example.com/riad-bab-doukkala/02.jpg"
+  ],
+  "reviews": [
+    "An absolute gem. The courtyard is magical, especially in the evening. Staff couldn't have been more helpful.",
+    "The most beautiful place I've ever stayed. Every corner is a work of art. Breakfast on the terrace was a highlight.",
+    "Perfect base for exploring the souks — everything is walking distance. The plunge pool was essential in the heat."
+  ],
+  "num_of_reviews": 73,
+  "average_review_score": 4.91,
+  "rental_info": {
+    "max_guests": 8,
+    "bedrooms": 4,
+    "bathrooms": 4
+  },
+  "location": {
+    "city": "Marrakech",
+    "country": "Morocco",
+    "latitude": 31.634,
+    "longitude": -7.989
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 21 days before check-in",
+    "payment_schedule": "30% deposit on booking, remainder 21 days before arrival",
+    "damage_deposit": "MAD 2,000 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "3 PM",
+    "check_out_time": "12 PM"
+  }
+}

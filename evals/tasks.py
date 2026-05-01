@@ -17,6 +17,7 @@ from inspect_ai.dataset import MemoryDataset, Sample
 from content_generation.fixtures import FIXTURES
 from content_generation.generator import AnthropicContentGenerator
 from content_generation.golden import GOLDEN_DATASET
+from content_generation.template_generator import TemplateContentGenerator
 from evals.scorers import (
     factual_accuracy_scorer,
     golden_constraints_scorer,
@@ -97,4 +98,65 @@ def golden_eval() -> Task:
             golden_constraints_scorer(),
         ],
         name="golden_eval",
+    )
+
+
+@task
+def fixture_eval_template() -> Task:
+    """Template-based baseline for fixture properties — no LLM, no API key required."""
+    generator = TemplateContentGenerator()
+
+    samples = [
+        Sample(
+            input=f"Generate marketing content for property: {prop.property_name}",
+            metadata={"property": json.loads(prop.model_dump_json())},
+            id=f"fixture-{prop.property_id}",
+        )
+        for prop in FIXTURES
+    ]
+
+    return Task(
+        dataset=MemoryDataset(samples),
+        solver=content_generation_solver(generator=generator),
+        scorer=[
+            structural_completeness_scorer(),
+            factual_accuracy_scorer(),
+            groundedness_scorer(),
+            marketing_quality_scorer(),
+        ],
+        name="fixture_eval_template",
+    )
+
+
+@task
+def golden_eval_template() -> Task:
+    """Template-based baseline for the golden dataset — no LLM, no API key required."""
+    generator = TemplateContentGenerator()
+
+    samples = [
+        Sample(
+            input=f"Generate marketing content for property: {gs.property.property_name}",
+            metadata={
+                "property": json.loads(gs.property.model_dump_json()),
+                "golden_category": gs.category.value,
+                "golden_notes": gs.notes,
+                "must_mention": gs.must_mention,
+                "must_not_mention": gs.must_not_mention,
+            },
+            id=f"golden-{gs.property.property_id}",
+        )
+        for gs in GOLDEN_DATASET
+    ]
+
+    return Task(
+        dataset=MemoryDataset(samples),
+        solver=content_generation_solver(generator=generator),
+        scorer=[
+            structural_completeness_scorer(),
+            factual_accuracy_scorer(),
+            groundedness_scorer(),
+            marketing_quality_scorer(),
+            golden_constraints_scorer(),
+        ],
+        name="golden_eval_template",
     )

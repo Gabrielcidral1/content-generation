@@ -1,0 +1,54 @@
+{
+  "property_id": 1001,
+  "property_name": "Villa Sol Dorado",
+  "property_type": "Villa",
+  "description": {
+    "name": "Villa Sol Dorado",
+    "headline": "Exclusive Mallorcan villa with private pool and sea views",
+    "description": "Nestled on the hillside above Port d'Andratx, Villa Sol Dorado is a stunning six-bedroom retreat that blends traditional Mallorcan architecture with modern luxury. Every room is bathed in natural light, and the expansive terrace offers uninterrupted views across the Mediterranean."
+  },
+  "amenities": [
+    "PrivatePool",
+    "AirConditioning",
+    "InternetBroadband",
+    "OutdoorFurniture",
+    "Barbecue",
+    "EssentialCookware",
+    "DishWasher",
+    "WashingMachine",
+    "LinensProvided",
+    "FreeParking",
+    "TV"
+  ],
+  "image_urls": [
+    "https://example.com/villa-sol-dorado/01.jpg",
+    "https://example.com/villa-sol-dorado/02.jpg"
+  ],
+  "reviews": [
+    "Absolutely breathtaking views and immaculate interiors. The pool was perfect and the kitchen had everything we needed. Will definitely return!",
+    "Best holiday we've ever had. The villa exceeded every expectation — spacious, clean, and the location is magical.",
+    "Outstanding property. The terrace at sunset is something you won't forget. Highly recommended for families or groups."
+  ],
+  "num_of_reviews": 87,
+  "average_review_score": 4.96,
+  "rental_info": {
+    "max_guests": 6,
+    "bedrooms": 3,
+    "bathrooms": 3
+  },
+  "location": {
+    "city": "Port d'Andratx",
+    "country": "Spain",
+    "latitude": 39.538,
+    "longitude": 2.385
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 30 days before check-in",
+    "payment_schedule": "50% deposit on booking, remainder 30 days before arrival",
+    "damage_deposit": "€500 damage deposit, refunded within 7 days of departure"
+  },
+  "house_rules": {
+    "check_in_time": "4 PM",
+    "check_out_time": "11 AM"
+  }
+}

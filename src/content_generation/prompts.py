@@ -13,6 +13,7 @@ CRITICAL RULES:
 3. Do NOT invent reviews, ratings, or social proof if reviews data is empty or absent.
 4. If the input description contains HTML tags (<p>, <strong>, <br>, etc.), ignore the markup — write clean plain-text marketing copy.
 5. Output ONLY valid JSON matching the schema below. No markdown fences, no extra text.
+6. Do NOT use em dashes (—) or en dashes in any copy. Use commas, colons, or short sentences instead.
 """
 
 OUTPUT_SCHEMA = """\

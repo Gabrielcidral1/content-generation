@@ -1,0 +1,54 @@
+{
+  "property_id": 1003,
+  "property_name": "Honeysuckle Cottage",
+  "property_type": "Cottage",
+  "description": {
+    "name": "Honeysuckle Cottage",
+    "headline": "Charming stone cottage with walled garden in the Cotswolds",
+    "description": "A 17th-century stone cottage tucked down a quiet lane in the village of Bourton-on-the-Water. Features original flagstone floors, exposed beams, and a wood-burning fireplace. The south-facing walled garden is perfect for lazy afternoons. Well-behaved dogs welcome."
+  },
+  "amenities": [
+    "Fireplace",
+    "Garden",
+    "PetsAllowed",
+    "InternetBroadband",
+    "WashingMachine",
+    "Heating",
+    "EssentialCookware",
+    "LinensProvided",
+    "FreeParking",
+    "Barbecue"
+  ],
+  "image_urls": [
+    "https://example.com/honeysuckle-cottage/01.jpg",
+    "https://example.com/honeysuckle-cottage/02.jpg"
+  ],
+  "reviews": [
+    "Absolutely magical. The cottage is full of character and the garden is wonderful. Our dog loved it too!",
+    "Perfect countryside escape. Cosy, well-equipped, and in a beautiful village. Already planning a return trip.",
+    "The fireplace made our winter stay incredibly cosy. Highly recommend for couples or small families.",
+    "Lovely host, beautiful property. Walking trails straight from the door."
+  ],
+  "num_of_reviews": 62,
+  "average_review_score": 4.88,
+  "rental_info": {
+    "max_guests": 4,
+    "bedrooms": 2,
+    "bathrooms": 1
+  },
+  "location": {
+    "city": "Bourton-on-the-Water",
+    "country": "United Kingdom",
+    "latitude": 51.874,
+    "longitude": -1.758
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 14 days before check-in",
+    "payment_schedule": "Full payment 14 days before arrival",
+    "damage_deposit": "£200 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "4 PM",
+    "check_out_time": "10 AM"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "property_id": 1004,
+  "property_name": "Seminyak Sunrise Bungalow",
+  "property_type": "Bungalow",
+  "description": {
+    "name": "Seminyak Sunrise Bungalow",
+    "headline": "Beachfront bungalow with direct ocean access in Seminyak",
+    "description": "A serene one-bedroom bungalow set directly on Seminyak Beach, with its own private terrace just metres from the water. Traditional Balinese architecture — teak wood, open-air bathroom, and tropical garden — creates an authentic island retreat. Sunsets here are legendary."
+  },
+  "amenities": [
+    "BeachAccess",
+    "OceanView",
+    "AirConditioning",
+    "InternetBroadband",
+    "OutdoorFurniture",
+    "Waterfront",
+    "LinensProvided",
+    "HairDryer"
+  ],
+  "image_urls": [
+    "https://example.com/seminyak-bungalow/01.jpg",
+    "https://example.com/seminyak-bungalow/02.jpg"
+  ],
+  "reviews": [
+    "Waking up to the sound of waves every morning was a dream. The bungalow is beautiful and the location unbeatable.",
+    "Perfect romantic escape. The sunset from the terrace is absolutely stunning. Very clean and comfortable."
+  ],
+  "num_of_reviews": 48,
+  "average_review_score": 4.83,
+  "rental_info": {
+    "max_guests": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "location": {
+    "city": "Seminyak",
+    "country": "Indonesia",
+    "latitude": -8.689,
+    "longitude": 115.162
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 7 days before check-in",
+    "payment_schedule": "Full payment on booking",
+    "damage_deposit": "IDR 1,000,000 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "2 PM",
+    "check_out_time": "12 PM"
+  }
+}

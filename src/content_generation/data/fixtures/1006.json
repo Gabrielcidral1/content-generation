@@ -1,0 +1,53 @@
+{
+  "property_id": 1006,
+  "property_name": "Alfama Heritage House",
+  "property_type": "Townhouse",
+  "description": {
+    "name": "Alfama Heritage House",
+    "headline": "Restored townhouse in the historic Alfama district of Lisbon",
+    "description": "<p>A beautifully <strong>restored 19th-century townhouse</strong> in the heart of Lisbon's oldest neighbourhood, Alfama.<br/><br/>The property spans three floors and features <strong>original azulejo tile work</strong>, high ceilings, and a private rooftop terrace with <em>sweeping views over the Tagus river</em>.</p><p>Just steps from the famous <strong>Miradouro de Santa Luzia</strong> viewpoint and within walking distance of the Se Cathedral and tram line 28.</p>"
+  },
+  "amenities": [
+    "AirConditioning",
+    "InternetBroadband",
+    "EssentialCookware",
+    "WashingMachine",
+    "LinensProvided",
+    "TV",
+    "Heating",
+    "IronAndBoard"
+  ],
+  "image_urls": [
+    "https://example.com/alfama-house/01.jpg",
+    "https://example.com/alfama-house/02.jpg"
+  ],
+  "reviews": [
+    "The rooftop view over the Tagus is worth it alone. Beautifully decorated with so much character.",
+    "Staying in Alfama is the real Lisbon experience. The house itself is stunning — tiles, high ceilings, the lot.",
+    "Perfect location for exploring the city on foot. The house has a wonderful sense of history.",
+    "The tram stops right nearby and the neighbourhood is full of life. Would absolutely stay again.",
+    "Gorgeous property, very well equipped. The rooftop terrace sealed the deal for us."
+  ],
+  "num_of_reviews": 119,
+  "average_review_score": 4.79,
+  "rental_info": {
+    "max_guests": 5,
+    "bedrooms": 2,
+    "bathrooms": 2
+  },
+  "location": {
+    "city": "Lisbon",
+    "country": "Portugal",
+    "latitude": 38.713,
+    "longitude": -9.133
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 14 days before check-in",
+    "payment_schedule": "Full payment 14 days before arrival",
+    "damage_deposit": "€300 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "3 PM",
+    "check_out_time": "11 AM"
+  }
+}

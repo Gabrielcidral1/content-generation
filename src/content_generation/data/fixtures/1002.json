@@ -1,0 +1,49 @@
+{
+  "property_id": 1002,
+  "property_name": "Eixample Modern Studio",
+  "property_type": "NormalApartment",
+  "description": {
+    "name": "Eixample Modern Studio",
+    "headline": "Stylish studio in the heart of Barcelona's Eixample district",
+    "description": "A compact, thoughtfully designed studio apartment on the fourth floor of a classic Eixample building. Steps from Passeig de Gràcia, top restaurants, and the city's best shopping. Ideal for a couple or solo traveller exploring Barcelona."
+  },
+  "amenities": [
+    "AirConditioning",
+    "InternetBroadband",
+    "TV",
+    "EssentialCookware",
+    "IronAndBoard",
+    "HairDryer",
+    "Heating",
+    "WorkDesk"
+  ],
+  "image_urls": [
+    "https://example.com/eixample-studio/01.jpg"
+  ],
+  "reviews": [
+    "Great location, everything you need for a short stay in Barcelona.",
+    "Clean and well-equipped. The neighbourhood is fantastic — so much to see and do."
+  ],
+  "num_of_reviews": 34,
+  "average_review_score": 4.61,
+  "rental_info": {
+    "max_guests": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "location": {
+    "city": "Barcelona",
+    "country": "Spain",
+    "latitude": 41.392,
+    "longitude": 2.163
+  },
+  "policies": {
+    "cancellation_policy": "Non-refundable after booking",
+    "payment_schedule": "Full payment on booking",
+    "damage_deposit": null
+  },
+  "house_rules": {
+    "check_in_time": "3 PM",
+    "check_out_time": "11 AM"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "property_id": 1011,
+  "property_name": "Lac d'Annecy Cabin",
+  "property_type": "Cottage",
+  "description": {
+    "name": "Lac d'Annecy Cabin",
+    "headline": "Waterfront cabin with private dock on Europe's clearest lake",
+    "description": "A beautifully finished wooden cabin sitting directly on the shores of Lac d'Annecy — consistently ranked the cleanest lake in Europe. Step from the private dock straight into the turquoise water, or launch a kayak from the garden. The surrounding mountains provide a dramatic backdrop in all seasons: swimming and cycling in summer, skiing at La Clusaz just 30 minutes away in winter. The cabin sleeps six across three bedrooms, with a panoramic living room that faces the lake."
+  },
+  "amenities": [
+    "Waterfront",
+    "Kayak",
+    "InternetBroadband",
+    "Heating",
+    "Fireplace",
+    "EssentialCookware",
+    "DishWasher",
+    "LinensProvided",
+    "FreeParking",
+    "OutdoorFurniture",
+    "Barbecue",
+    "TV"
+  ],
+  "image_urls": [
+    "https://example.com/annecy-cabin/01.jpg",
+    "https://example.com/annecy-cabin/02.jpg"
+  ],
+  "reviews": [
+    "The lake is right there. You literally jump off the dock into the most beautiful water. Magical in summer.",
+    "We went in October — still warm enough to swim and the autumn colours on the mountains were incredible.",
+    "The kayaks were a huge hit with the kids. Location is perfect, the cabin is cosy and well-equipped.",
+    "Probably the best view I've ever had from a living room. Watching the alpenglow on the mountains at dusk was special."
+  ],
+  "num_of_reviews": 91,
+  "average_review_score": 4.87,
+  "rental_info": {
+    "max_guests": 6,
+    "bedrooms": 3,
+    "bathrooms": 2
+  },
+  "location": {
+    "city": "Annecy",
+    "country": "France",
+    "latitude": 45.883,
+    "longitude": 6.165
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 21 days before check-in",
+    "payment_schedule": "50% deposit on booking, remainder 21 days before arrival",
+    "damage_deposit": "€400 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "4 PM",
+    "check_out_time": "10 AM"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "property_id": 1009,
+  "property_name": "Canopy Nest Treehouse",
+  "property_type": "Cottage",
+  "description": {
+    "name": "Canopy Nest Treehouse",
+    "headline": "Solar-powered jungle treehouse with private waterfall access in the Osa Peninsula",
+    "description": "Perched 9 metres above the rainforest floor in the Osa Peninsula, Canopy Nest is a hand-crafted treehouse built entirely from reclaimed hardwood. The open-air sleeping platform lets you fall asleep to the sound of the forest and wake to howler monkeys and toucans. Solar power, rainwater collection, and a composting system make this a genuinely low-impact stay. A private trail leads to a natural swimming pool at the base of a 12-metre waterfall."
+  },
+  "amenities": [
+    "InternetBroadband",
+    "LinensProvided",
+    "OutdoorFurniture",
+    "EssentialCookware",
+    "Barbecue"
+  ],
+  "image_urls": [
+    "https://example.com/canopy-nest/01.jpg",
+    "https://example.com/canopy-nest/02.jpg"
+  ],
+  "reviews": [
+    "The most unique and magical place I have ever slept. Falling asleep to the jungle was life-changing.",
+    "The waterfall is a 10-minute walk and completely private. Saw three species of monkey from the deck.",
+    "Completely off-grid but surprisingly comfortable. The hosts thought of everything. Unforgettable."
+  ],
+  "num_of_reviews": 54,
+  "average_review_score": 4.94,
+  "rental_info": {
+    "max_guests": 2,
+    "bedrooms": 1,
+    "bathrooms": 1
+  },
+  "location": {
+    "city": "Puerto Jiménez",
+    "country": "Costa Rica",
+    "latitude": 8.533,
+    "longitude": -83.299
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 14 days before check-in",
+    "payment_schedule": "Full payment on booking",
+    "damage_deposit": null
+  },
+  "house_rules": {
+    "check_in_time": "2 PM",
+    "check_out_time": "11 AM"
+  }
+}

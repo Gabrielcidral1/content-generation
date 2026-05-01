@@ -1,0 +1,58 @@
+{
+  "property_id": 1010,
+  "property_name": "Podere Val d'Orcia",
+  "property_type": "Villa",
+  "description": {
+    "name": "Podere Val d'Orcia",
+    "headline": "Restored 16th-century farmhouse with vineyard, pool, and panoramic Tuscan valley views",
+    "description": "Set among 12 hectares of olive groves and working vineyard in the UNESCO-listed Val d'Orcia landscape, Podere Val d'Orcia is a lovingly restored stone farmhouse sleeping up to twelve. Five en-suite bedrooms, a vast farmhouse kitchen, a shaded loggia for outdoor dining, and an infinity pool overlooking the valley make this the ideal venue for family reunions, milestone celebrations, or extended group getaways. Guests receive a welcome hamper of estate olive oil and wine on arrival."
+  },
+  "amenities": [
+    "PrivatePool",
+    "AirConditioning",
+    "InternetBroadband",
+    "OutdoorFurniture",
+    "Barbecue",
+    "EssentialCookware",
+    "DishWasher",
+    "WashingMachine",
+    "LinensProvided",
+    "FreeParking",
+    "TV",
+    "Garden",
+    "Fireplace"
+  ],
+  "image_urls": [
+    "https://example.com/podere-val-dorcia/01.jpg",
+    "https://example.com/podere-val-dorcia/02.jpg",
+    "https://example.com/podere-val-dorcia/03.jpg"
+  ],
+  "reviews": [
+    "We brought three generations of our family here and it was perfect for all of us. The pool and the views are stunning.",
+    "The welcome hamper set the tone — thoughtful, generous, and quintessentially Tuscan. The kitchen is a dream to cook in.",
+    "We celebrated a 50th anniversary here. The setting is breathtaking and the farmhouse has real soul. Will return.",
+    "The most beautiful property in the most beautiful landscape. Worth every penny for a special occasion."
+  ],
+  "num_of_reviews": 38,
+  "average_review_score": 4.98,
+  "rental_info": {
+    "max_guests": 12,
+    "bedrooms": 5,
+    "bathrooms": 5
+  },
+  "location": {
+    "city": "Pienza",
+    "country": "Italy",
+    "latitude": 43.076,
+    "longitude": 11.677
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 60 days before check-in",
+    "payment_schedule": "30% deposit on booking, remainder 60 days before arrival",
+    "damage_deposit": "€2,000 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "4 PM",
+    "check_out_time": "10 AM"
+  }
+}

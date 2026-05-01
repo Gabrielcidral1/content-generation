@@ -1,0 +1,57 @@
+{
+  "property_id": 1005,
+  "property_name": "Chalet Les Aiguilles",
+  "property_type": "Chalet",
+  "description": {
+    "name": "Chalet Les Aiguilles",
+    "headline": "Ski-in/ski-out alpine chalet for eight with panoramic Mont Blanc views",
+    "description": "An impressive four-bedroom chalet positioned directly on the Grands Montets ski run in Chamonix. Enjoy ski-in/ski-out convenience, a large open-plan living area with a stone fireplace, and floor-to-ceiling windows framing Mont Blanc. After a day on the slopes, unwind in the sauna or hot tub on the wraparound deck."
+  },
+  "amenities": [
+    "SkiAccess",
+    "Fireplace",
+    "HotTub",
+    "Sauna",
+    "AirConditioning",
+    "InternetBroadband",
+    "EssentialCookware",
+    "DishWasher",
+    "WashingMachine",
+    "LinensProvided",
+    "FreeParking",
+    "TV",
+    "OutdoorFurniture"
+  ],
+  "image_urls": [
+    "https://example.com/chalet-aiguilles/01.jpg",
+    "https://example.com/chalet-aiguilles/02.jpg",
+    "https://example.com/chalet-aiguilles/03.jpg"
+  ],
+  "reviews": [
+    "Ski-in/ski-out is a complete game changer. The hot tub after a long day on the mountain is perfection.",
+    "Stunning property with incredible views of Mont Blanc. Spacious, warm and beautifully equipped.",
+    "Best ski chalet we've ever rented. The whole group agreed — already looking at dates for next season."
+  ],
+  "num_of_reviews": 41,
+  "average_review_score": 4.92,
+  "rental_info": {
+    "max_guests": 8,
+    "bedrooms": 4,
+    "bathrooms": 3
+  },
+  "location": {
+    "city": "Chamonix",
+    "country": "France",
+    "latitude": 45.924,
+    "longitude": 6.87
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 60 days before check-in",
+    "payment_schedule": "30% deposit on booking, remainder 60 days before arrival",
+    "damage_deposit": "€1,000 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "5 PM",
+    "check_out_time": "10 AM"
+  }
+}

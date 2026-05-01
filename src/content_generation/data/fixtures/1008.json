@@ -1,0 +1,56 @@
+{
+  "property_id": 1008,
+  "property_name": "Marina Sky Penthouse",
+  "property_type": "NormalApartment",
+  "description": {
+    "name": "Marina Sky Penthouse",
+    "headline": "Full-floor penthouse with private rooftop terrace overlooking Dubai Marina",
+    "description": "Occupying the entire 42nd floor of a landmark tower in Dubai Marina, this three-bedroom penthouse delivers an uncompromising luxury experience. Floor-to-ceiling glass on all sides frames panoramic views stretching from the Burj Al Arab to the Palm Jumeirah. The private rooftop terrace features a jacuzzi, a summer kitchen, and a sun deck. Concierge service and a dedicated parking bay are included."
+  },
+  "amenities": [
+    "HotTub",
+    "AirConditioning",
+    "InternetBroadband",
+    "OutdoorFurniture",
+    "EssentialCookware",
+    "DishWasher",
+    "WashingMachine",
+    "LinensProvided",
+    "TV",
+    "WorkDesk",
+    "FreeParking",
+    "Elevator"
+  ],
+  "image_urls": [
+    "https://example.com/marina-penthouse/01.jpg",
+    "https://example.com/marina-penthouse/02.jpg",
+    "https://example.com/marina-penthouse/03.jpg"
+  ],
+  "reviews": [
+    "The views are simply indescribable. Waking up to the Marina and Palm every morning never gets old.",
+    "Every detail is impeccable. The rooftop jacuzzi at night with the city lights is an experience you won't forget.",
+    "Stayed for a week. The concierge arranged everything seamlessly. Worth every dirham."
+  ],
+  "num_of_reviews": 29,
+  "average_review_score": 4.97,
+  "rental_info": {
+    "max_guests": 6,
+    "bedrooms": 3,
+    "bathrooms": 3
+  },
+  "location": {
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "latitude": 25.08,
+    "longitude": 55.14
+  },
+  "policies": {
+    "cancellation_policy": "Free cancellation up to 30 days before check-in",
+    "payment_schedule": "50% deposit on booking, remainder 30 days before arrival",
+    "damage_deposit": "AED 5,000 damage deposit"
+  },
+  "house_rules": {
+    "check_in_time": "4 PM",
+    "check_out_time": "11 AM"
+  }
+}
