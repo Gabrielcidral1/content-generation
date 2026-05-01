@@ -7,7 +7,7 @@ The primary deliverable is the evaluation suite — the code that measures wheth
 
 ## System Flow
 
-### Evaluation pipeline (requires `ANTHROPIC_API_KEY`)
+### Evaluation pipeline 
 
 ```mermaid
 flowchart TD
@@ -43,30 +43,13 @@ flowchart TD
     S1 & S2 & S3 & S4 & S5 --> LOGS["logs/*.eval\ncommitted to repo"]
 ```
 
-### Review dashboard (no API key needed)
-
-```mermaid
-flowchart LR
-    LOGS["logs/*.eval"] --> D["evals.py\nMarimo dashboard"]
-    D --> V1["Generated content\nper property · LLM vs template tabs"]
-    D --> V2["Composite score\nLLM vs template lift"]
-    D --> V3["Golden evaluation\nmust-mention · must-not-mention"]
-    D --> V4["Reproducibility\nscore variance across runs"]
-```
-
----
-
 ## Approach
 
 ### Evaluation-first design
 
-The evaluation suite is the core of this project. There are three levels at which evaluation matters:
+The evaluation suite is the core of this project. Important to note that we are only focusing here on offline content quality. In production, we would have built other live checks and hard gates. Here, we're building the proper evaluation suite to be able to measure the performance of our content creator. 
 
-**1. Online quality gates** *(not implemented here)*
-Before content is served, fast rule-based checks would verify structural completeness and factual accuracy inline, triggering a fallback to templated content if they fail. This requires production instrumentation — out of scope for this assignment.
-
-**2. Offline content quality** *(implemented as Inspect AI tasks)*
-This is what the project delivers. After generation, a set of scorers evaluate the output in batch. They mix two axes of variation:
+To measure it, we use two axes of variation:
 
 - **Reference-free vs reference-based**: most scorers (`structural_completeness`, `factual_accuracy`, `groundedness`, `marketing_quality`) evaluate the output against the input data alone. The `golden_constraints` scorer is reference-based — it checks output against a curated set of `must_mention` / `must_not_mention` phrases, including adversarial injection cases.
 - **Rule-based vs LLM judge**: `structural_completeness` and `factual_accuracy` use deterministic rules (no API calls). `groundedness` and `marketing_quality` use an LLM judge. `golden_constraints` is hybrid — rules first, LLM only when rules pass.
@@ -83,7 +66,7 @@ This is what the project delivers. After generation, a set of scorers evaluate t
 
 ### Template baseline
 
-A deterministic `TemplateContentGenerator` produces rule-based copy from property fields with no API calls. Running `fixture_eval_template` and `golden_eval_template` against the same scorer suite establishes a baseline composite score. The Composite Score card in the dashboard shows the lift (LLM minus template) per property, making it easy to identify where the LLM adds value and where it does not.
+A deterministic `TemplateContentGenerator` produces rule-based copy from property fields with no API calls. Running `fixture_eval_template` and `golden_eval_template` against the same scorer suite establishes a baseline composite score. The Composite Score card in the dashboard shows the lift (LLM minus template) per property, making it easy to identify where the LLM adds value and where it does not. It also gives a sense of the quality of our evals. 
 
 ### Golden dataset
 
@@ -214,6 +197,6 @@ content_generation/
 
 Once the evaluation suite is mature enough that we trust the generator will not hallucinate or produce blunders, the natural next step is to think about the problem through a **causal inference lens**.
 
-The metrics we ultimately care about — booking conversion rate, time-to-publish, and number of manual edits made by the user after generation — are only observable **online**, in production. Offline scorers are proxies, not ground truth. To measure whether the generator actually improves these outcomes, we need **A/B experiments**: serve LLM-generated copy to a randomly selected subset of properties, templated copy to the rest, and compare booking rates and editorial effort over a statistically significant window.
+The metrics we ultimately care about are booking conversion rate, time-to-publish, and number of manual edits made by the user after generation which are only observable **online**, in production. Offline scorers are proxies, not ground truth. To measure whether the generator actually improves these outcomes, we need **A/B experiments**.
 
 This is also where the **composite score weights** need revisiting. The current weights (Factual Accuracy 30%, Marketing Quality 25%, etc.) are a reasonable prior, but they are arbitrary until we have empirical data linking each scorer to the business outcomes above. Once A/B results are available, we can regress conversion lift against individual scorer values to learn which dimensions actually predict success and recalibrate accordingly.
